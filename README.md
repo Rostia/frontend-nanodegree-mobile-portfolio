@@ -53,3 +53,20 @@ The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstra
 
 * <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
 * <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+
+# List optimization
+## Result link : [here](https://rostia.github.io/frontend-nanodegree-mobile-portfolio/index.html)
+1) add ngrok.exe
+2) minification images (./img/[all] , ./view/images/[all])
+3) ./index.html: load print.css when need to print out
+4) ./index.html: transferred JS files under body and add async
+5) ./index.html: replaced the <link href="css/style.css" rel="stylesheet"> on the Internal CSS
+6) [project-2048.html, project-mobile.html, project-webperf.html]: repeat of actions 3, 4, 5
+7) ./view/css/bootstrap-grid.min.css: Add
+8) ./views/pizza.html: replaced css/bootstrap-grid.css to css/bootstrap-grid.min.css
+9) ./views/pizza.html: replaced the <link href="./view/css/style.css" rel="stylesheet"> on the Internal CSS
+10) ./views/pizza.html: change images/pizzeria.jpg to images/pizzeria.webp
+11) ./views/js/main.js: (function changePizzaSizes) moving variable declaration outside of cycle
+12) ./views/js/main.js: (function updatePositions) items[i].style.left replaced by items[i].style.transform
+13) ./views/js/main.js: ADD list random pizza async
+14) ./views/js/main.js: remove querySelector* from cycle if it unnecessarily

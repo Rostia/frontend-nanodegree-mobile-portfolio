@@ -449,10 +449,12 @@ var resizePizzas = function(size) {
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+    const randomPizzaContainer = document.querySelectorAll(".randomPizzaContainer");
+    var dx = determineDx(randomPizzaContainer[0], size);
+    var newwidth = (randomPizzaContainer[0].offsetWidth + dx) + 'px';
+
+    for (var i = 0; i < randomPizzaContainer.length; i++) {
+      randomPizzaContainer[i].style.width = newwidth;
     }
   }
 
@@ -466,13 +468,15 @@ var resizePizzas = function(size) {
 };
 
 window.performance.mark("mark_start_generating"); // collect timing data
-
 // This for-loop actually creates and appends all of the pizzas when the page loads
-for (var i = 2; i < 100; i++) {
+setTimeout(()=>{
+  const fragment = document.createDocumentFragment();
   var pizzasDiv = document.getElementById("randomPizzas");
-  pizzasDiv.appendChild(pizzaElementGenerator(i));
-}
-
+  for (var i = 2; i < 100; i++) {
+    fragment.appendChild(pizzaElementGenerator(i));
+  }
+  pizzasDiv.appendChild(fragment);
+}, 0);
 // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
 window.performance.mark("mark_end_generating");
 window.performance.measure("measure_pizza_generation", "mark_start_generating", "mark_end_generating");
@@ -506,7 +510,7 @@ function updatePositions() {
     // document.body.scrollTop is no longer supported in Chrome.
     var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     var phase = Math.sin((scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    items[i].style.transform = `translateX(${items[i].basicLeft + 100 * phase - 650}px)`;
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -526,6 +530,7 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
+  const fragment = document.createDocumentFragment();
   for (var i = 0; i < 200; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
@@ -534,7 +539,9 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    fragment.appendChild(elem);
+    
   }
+  document.querySelector("#movingPizzas1").appendChild(fragment);
   updatePositions();
 });
